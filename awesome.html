@@ -2,7 +2,7 @@
 <html xmlns:ng="http://angularjs.org" xmlns:fractalsvg="http://svg.pseudopattern.com">
 <head>
     <title></title>
-    <script src="angular-0.10.4.js" type="text/javascript" ng:autobind></script>
+    <script src="angular-0.10.5.js" type="text/javascript" ng:autobind></script>
     <script type="text/javascript">
         function makeSVG(tag, attrs) {
             var el= document.createElementNS('http://www.w3.org/2000/svg', tag);
@@ -40,6 +40,21 @@
                 for(var j=0;j<25;j++){
                     circle = makeSVG('circle',{cx:""+(x_init+spacing*i),
                         cy:""+(y_init+j*spacing),r:"5",stroke:"black",fill:"red"})
+                    var csharp = angular.element(circle);
+                    csharp.data("show",true);
+                    csharp.attr("display","none");
+                    var time = Math.random()*10*(i+1)*(j+1);
+                    var calling = function(){
+                        csharp.data("show",!csharp.data("show"));
+                        if(csharp.data("show")){
+                            csharp.attr("display",true);
+                        } else{
+                            csharp.attr("display","none")
+                        }
+                        setTimeout(calling,time);
+                    }
+                    calling();
+                    console.log(csharp.data("show"));
                     svg.appendChild(circle);
                 }
             }

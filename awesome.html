@@ -30,7 +30,6 @@
         LineController.$inject = ['$document']
 
         angular.widget('fractalsvg:trace',function(linkElement){
-            console.log(linkElement);
             var svg = makeSVG('svg',{version:"1.1"});
             var circle;
             var x_init = 25;
@@ -40,30 +39,45 @@
                 for(var j=0;j<25;j++){
                     circle = makeSVG('circle',{cx:""+(x_init+spacing*i),
                         cy:""+(y_init+j*spacing),r:"5",stroke:"black",fill:"red"})
-                    var csharp = angular.element(circle);
-                    csharp.data("show",true);
-                    csharp.attr("display","none");
-                    var time = Math.random()*10*(i+1)*(j+1);
-                    var calling = function(){
-                        csharp.data("show",!csharp.data("show"));
-                        if(csharp.data("show")){
-                            csharp.attr("display",true);
-                        } else{
-                            csharp.attr("display","none")
-                        }
-                        setTimeout(calling,time);
-                    }
-                    calling();
-                    console.log(csharp.data("show"));
                     svg.appendChild(circle);
                 }
             }
 
             linkElement.append(svg);
-            console.log(this);
-            console.log(this.scope());
-            console.log(angular.scope());
-        })
+            var circles = linkElement.children().children().attr("display",true).data("show",false);
+            var hiya = document.getElementsByTagName('circle');
+            for(var i = 0;i<hiya.length;i++){
+                var h = angular.element(hiya[i]);
+                setInterval(function(q){
+                    return function(){
+                        q.data("show",!q.data("show"));
+                        if(q.data("show")){
+                            q.attr("display",true);
+                        } else{
+                            q.attr("display","none")
+                        }
+                    }
+                }(h),Math.random()*1000+100)
+            }
+        });
+
+        function Blinker(elem){
+            this.elem = elem;
+        }
+
+        Blinker.prototype = {
+            blink:function(){
+                console.log(this.elem);
+                var csharp = this.elem;
+                csharp.data("show",!csharp.data("show"));
+                if(csharp.data("show")){
+                    csharp.attr("display",true);
+                } else{
+                    csharp.attr("display","none")
+                }
+            }
+        }
+
 
         function ComplexNumber(x,y){
             this.x = x;

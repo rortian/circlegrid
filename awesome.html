@@ -155,12 +155,12 @@
         Mapper.prototype = {
             step:function(inc){
                 if(this.same){
-                    var raised = inc.power(n);
+                    var raised = inc.power(this.n);
                     return raised.plus(lambda.times(raised.inverse()));
                 } else {
-                    mth = inc.power(m);
-                    nth = inc.power(n);
-                    return mth.plus(lambda.times(nth.inverse()));
+                    mth = inc.power(this.m);
+                    nth = inc.power(this.n);
+                    return mth.plus(this.lambda.times(nth.inverse()));
                 }
             },
             escape:function(inc,max){
@@ -175,6 +175,8 @@
                 return times;
 	        }
         }
+
+        mappy = new Mapper(new ComplexNumber(1e-6,0),3,2);
     </script>
 </head>
 <body>

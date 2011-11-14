@@ -14,20 +14,6 @@
         
     </script>
     <script type="text/javascript">
-        function LineController($document){
-            this.fun = ['hi']
-            this.doc = $document;
-            console.log(angular.element('<body>'));
-        }
-
-
-        LineController.prototype = {
-            hi:function(){
-                console.log("hi there!");
-            }
-        }
-
-        LineController.$inject = ['$document']
 
         angular.widget('fractalsvg:trace',function(linkElement){
             var svg = makeSVG('svg',{version:"1.1"});

@@ -207,14 +207,9 @@ pointy = new PointGrid(30,30,-1.5,1.5,-1.5,1.5);
 
 Greedy = function(grid){
     this.grid = grid;
-    this.placed = [];
-    for(var i = 0;i<this.grid.length;i++){
-        this.placed[i] = []
-        for(var j = 0;j<this.grid[i].length;j++){
-            this.placed[i][j] = false;
-        }
-    }
+    this.placed = this.allfalse();
     this.groups = {};
+    this.directions = [[1,0],[0,1],[-1,0],[0,-1]];
     this.decompose();
 }
 
@@ -228,35 +223,60 @@ Greedy.prototype = {
             }
         }
     },
+    allfalse:function(){
+        var ret = [];
+        for(var i = 0;i<this.grid.length;i++){
+            ret[i] = [];
+            for(var j = 0;j<this.grid[i].length;j++){
+                ret[i][j] = false;
+            }
+        }
+        return ret;
+    },
     group:function(x,y){
         var criteria = this.grid[x][y];
+        this.visited = this.allfalse();
         if(!this.groups[criteria]){
             this.groups[criteria] = [];
         }
         var members = [[x,y]];
         this.placed[x][y] = true;
-        var right = this.friends(x+1,y,criteria);
-        var bottom = this.friends(x,y+1,criteria);
-        members = members.concat(right,bottom);
+        this.visited[x][y] = true;
+        for(var d in this.directions){
+            var current = this.directions[d];
+            if(this.valid_search(x+current[0],y+current[1])){
+                members = members.concat(this.friends(x+current[0],y+current[1],criteria));
+            }
+        }
         this.groups[criteria].push(members);
     },
     friends:function(x,y,criteria){
-        if(this.placed[x] == undefined){
-            return [];
-        }
-        var there = this.placed[x][y];
-        if(there || there == undefined){
-            return [];
-        }
+        this.visited[x][y] = true;
         var ret = [];
         if(this.grid[x][y] == criteria){
+            if(this.placed == true){
+                console.log("Weird not yet visited but placed");
+                console.log("x: "+x+" y: "+y);
+            }
             ret = [[x,y]];
             this.placed[x][y] = true;
-            var right = this.friends(x+1,y,criteria);
-            var bottom = this.friends(x,y+1,criteria);
-            ret.concat(right,bottom);
+            for(var d in this.directions){
+                var current = this.directions[d];
+                if(this.valid_search(x+current[0],y+current[1])){
+                    ret = ret.concat(this.friends(x+current[0],y+current[1],criteria));
+                }
+            }
         }
         return ret;
+    },
+    valid_search:function(x,y){
+        if(this.placed[x] == undefined){
+            return false;
+        }
+        if(this.placed[x][y] == undefined){
+            return false;
+        }
+        return !this.visited[x][y];
     }
  }
 

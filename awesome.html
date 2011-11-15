@@ -21,8 +21,20 @@
             var x_init = 25;
             var y_init = 25;
             var spacing = 25;
+            var left_corner = -1.5;
+            var right_corner = 1.5;
+            var top_corner = 1.5;
+            var bottom_corner = -1.5;
+            var colors = ["red","orange","yellow","green","blue"];
+            var delta = 3.0/24;
             for(var i=0;i<25;i++){
                 for(var j=0;j<25;j++){
+                    var z = function(x,y){
+                        var current_point = new ComplexNumber(left_corner+x*delta,top_corner-y*delta);
+                        console.log(current_point);
+                        console.log("point for "+x+","+y);
+                        console.log(mappy.escape(current_point,50));
+                    }(i,j);
                     circle = makeSVG('circle',{cx:""+(x_init+spacing*i),
                         cy:""+(y_init+j*spacing),r:"5",stroke:"black",fill:"red"})
                     svg.appendChild(circle);

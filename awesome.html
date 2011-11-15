@@ -152,8 +152,8 @@
             escape:function(inc,max){
                 var times = 0;
                 var temp = inc;
-                while(temp.quickMag()<9){
-                    temp = step(temp);
+                while(temp.bignorm()<9){
+                    temp = this.step(temp);
                     times++;
                     if(times==max)
                         return max;
@@ -166,7 +166,7 @@
     </script>
 </head>
 <body>
-    <div ng:controller="LineController">
+    <div>
         <fractalsvg:trace></fractalsvg:trace>
     </div>
 </body>

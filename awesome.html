@@ -172,7 +172,38 @@
 	        }
         }
 
+        PointGrid = function(x,y,x_start,x_final,y_start,y_final){
+            this.x = x;
+            this.y = y;
+            this.x_start = x_start;
+            this.x_final = x_final;
+            this.y_start = y_start;
+            this.y_final = y_final;
+        }
+
+        PointGrid.prototype = {
+            apply:function(map){
+                var delta = (1.0*(this.x_final - this.x_start))/(this.x - 1);
+                var ret = [];
+                for(var i = 0;i<this.x;i++){
+                    ret[i] = [];
+                    for(var j = 0;j<this.y;j++){
+                        ret[i][j] = map.escape(
+                                new ComplexNumber(this.x_start+i*delta,
+                                                  this.y_final-j*delta),50);
+                    }
+                }
+                return ret;
+            }
+        }
+
         mappy = new Mapper(new ComplexNumber(1e-6,0),3,2);
+
+        pointy = new PointGrid(30,30,-1.5,1.5,-1.5,1.5);
+
+        console.log(pointy.apply(mappy));
+
+
     </script>
 </head>
 <body>

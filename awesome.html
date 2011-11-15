@@ -31,12 +31,10 @@
                 for(var j=0;j<25;j++){
                     var z = function(x,y){
                         var current_point = new ComplexNumber(left_corner+x*delta,top_corner-y*delta);
-                        console.log(current_point);
-                        console.log("point for "+x+","+y);
-                        console.log(mappy.escape(current_point,50));
+                        return mappy.escape(current_point,50);
                     }(i,j);
                     circle = makeSVG('circle',{cx:""+(x_init+spacing*i),
-                        cy:""+(y_init+j*spacing),r:"5",stroke:"black",fill:"red"})
+                        cy:""+(y_init+j*spacing),r:"5",stroke:"black",fill:colors[z % colors.length]})
                     svg.appendChild(circle);
                 }
             }

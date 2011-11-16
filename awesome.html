@@ -33,40 +33,7 @@ angular.widget('fractalsvg:trace',function(linkElement){
     }
 
     linkElement.append(svg);
-    var circles = linkElement.children().children().attr("display",true).data("show",false);
-    var hiya = document.getElementsByTagName('circle');
-    for(var i = 0;i<hiya.length;i++){
-        var h = angular.element(hiya[i]);
-        setInterval(function(q){
-            return function(){
-                q.data("show",!q.data("show"));
-                if(q.data("show")){
-                    q.attr("display",true);
-                } else{
-                    q.attr("display","none")
-                }
-            }
-        }(h),Math.random()*3000+250)
-    }
 });
-
-function Blinker(elem){
-    this.elem = elem;
-}
-
-Blinker.prototype = {
-    blink:function(){
-        console.log(this.elem);
-        var csharp = this.elem;
-        csharp.data("show",!csharp.data("show"));
-        if(csharp.data("show")){
-            csharp.attr("display",true);
-        } else{
-            csharp.attr("display","none")
-        }
-    }
-}
-
 
 function ComplexNumber(x,y){
     this.x = x;
@@ -290,15 +257,19 @@ Greedy.prototype = {
     }
  }
 
+ascending = function(a,b){ return (a-b) }
+
 Group = function(members){
-    this.friends = {}
+    this.friends = []
     for(var c in members){
         var current = members[c];
         if(!this.friends[current[0]]){
             this.friends[current[0]] = []
         }
-        this.friends[current[0]].push(current[1]);
+        this.friends[current[0]][current[1]] = true;
     }
+
+
 }
 
     greedy = new Greedy(pointy.apply(mappy));

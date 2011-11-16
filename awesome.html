@@ -209,7 +209,7 @@ Greedy = function(grid){
     this.grid = grid;
     this.placed = this.allfalse();
     this.groups = {};
-    this.directions = [[1,0],[0,1],[-1,0],[0,-1]];
+    this.directions = [[1,0],[0,1],[-1,0],[0,-1],[1,1],[-1,1],[-1,-1],[1,-1]];
     this.decompose();
 }
 
@@ -277,12 +277,35 @@ Greedy.prototype = {
             return false;
         }
         return !this.visited[x][y];
+    },
+    optimize:function(){
+        var ret = []
+        for(var x in this.groups){
+            var current = this.groups[x];
+            for(var y in current){
+                ret.push(new Group(current[y]))
+            }
+        }
+        return ret;
     }
  }
 
+Group = function(members){
+    this.friends = {}
+    for(var c in members){
+        var current = members[c];
+        if(!this.friends[current[0]]){
+            this.friends[current[0]] = []
+        }
+        this.friends[current[0]].push(current[1]);
+    }
+}
+
     greedy = new Greedy(pointy.apply(mappy));
 
-    console.log(greedy)
+    console.log(greedy);
+
+    console.log(greedy.optimize());
 
 
 

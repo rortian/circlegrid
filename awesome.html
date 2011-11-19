@@ -269,16 +269,54 @@ Group = function(members){
         this.friends[current[0]][current[1]] = true;
     }
 
+    this.stats();
 
+}
+
+Group.prototype = {
+    stats:function(){
+        this.x_max = this.friends.length - 1;
+        this.y_min = this.friends.length + 1000;
+        this.y_max = -1;
+        for(var x_i in this.friends){
+            if(!this.x_min && this.x_min != 0){
+                this.x_min = parseInt(x_i);
+            }
+            for(var y_i in this.friends[x_i]){
+                if(y_i < this.y_min){
+                    this.y_min = parseInt(y_i);
+                }
+                if(y_i > this.y_max){
+                    this.y_max = parseInt(y_i);
+                }
+            }
+        }
+    },
+    area:function(){
+        return (this.x_max - this.x_min)*(this.y_max - this.y_min);
+    }
 }
 
     greedy = new Greedy(pointy.apply(mappy));
 
     console.log(greedy);
 
-    console.log(greedy.optimize());
+    var groups = greedy.optimize();
 
+    console.log(groups);
 
+    var dist = [];
+
+    for(var g in groups){
+        var area = groups[g].area();
+        if(!dist[area]){
+            dist[area] = 0;
+        } else {
+            dist[area] += 1;
+        }
+    }
+
+    console.log(dist)
 
 
 

@@ -15,25 +15,7 @@
 </script>
 <script type="text/javascript">
 
-angular.widget('fractalsvg:trace',function(linkElement){
-    var svg = makeSVG('svg',{version:"1.1"});
-    var circle;
-    var x_init = 25;
-    var y_init = 25;
-    var spacing = 25;
-    var colors = ["red","orange","yellow","green","blue"];
-    var fractal = pointy.apply(mappy);
-    var delta = 3.0/24;
-    for(var i=0;i<30;i++){
-        for(var j=0;j<30;j++){
-            circle = makeSVG('circle',{cx:""+(x_init+spacing*i),
-                cy:""+(y_init+j*spacing),r:"5",stroke:"black",fill:colors[fractal[i][j] % colors.length]})
-            svg.appendChild(circle);
-        }
-    }
 
-    linkElement.append(svg);
-});
 
 function ComplexNumber(x,y){
     this.x = x;
@@ -294,6 +276,12 @@ Group.prototype = {
     },
     area:function(){
         return (this.x_max - this.x_min)*(this.y_max - this.y_min);
+    },
+    width:function(){
+        return (this.x_max - this.x_min) + 1;
+    },
+    height:function(){
+        return (this.y_max - this.y_min) + 1;
     }
 }
 
@@ -305,26 +293,50 @@ Group.prototype = {
 
     console.log(groups);
 
-    var dist = [];
+    var dist = {};
 
     for(var g in groups){
         var area = groups[g].area();
         if(!dist[area]){
-            dist[area] = 0;
+            dist[area] = 1;
         } else {
-            dist[area] += 1;
+            dist[area] = dist[area] + 1;
         }
     }
 
     console.log(dist)
 
+angular.widget('fractalsvg:trace',function(linkElement){
+    var svg = makeSVG('svg',{version:"1.1"});
+    var circle;
+    var x_init = 25;
+    var y_init = 25;
+    var spacing = 25;
+    var colors = ["red","orange","yellow","green","blue"];
+    var fractal = pointy.apply(mappy);
+    var delta = 3.0/24;
+    for(var i=0;i<30;i++){
+        for(var j=0;j<30;j++){
+            circle = makeSVG('circle',{cx:""+(x_init+spacing*i),
+                cy:""+(y_init+j*spacing),r:"5",stroke:"black",fill:colors[fractal[i][j] % colors.length]})
+            svg.appendChild(circle);
+        }
+    }
 
+    linkElement.append(svg);
+});
+
+DotsController = function(){
+    this.dots = [0,1,2,3,4];
+}
 
 </script>
 </head>
 <body>
-<div>
-    <fractalsvg:trace></fractalsvg:trace>
-</div>
+  <svg xmlns="http://www.w3.org/2000/svg" ng:controller="DotsController">
+      <g ng:repeat="dot in dots">
+          <circle r="5" ng:bind-attr='{"cx":"{{5*dot}}","cy":"{{10*dot}}"}' fill="red" />
+      </g>
+  </svg>
 </body>
 </html>

@@ -328,15 +328,32 @@ angular.widget('fractalsvg:trace',function(linkElement){
 
 DotsController = function(){
     this.dots = [0,1,2,3,4];
+    this.x_spacing = 25;
+    this.y_spacing = 25;
+    this.x_margin = 10;
+    this.y_margin = 10;
+    this.radius = 10;
+}
+
+DotsController.prototype = {
+    curious:function(){
+        console.log(this);
+        return 11;
+    }
 }
 
 </script>
 </head>
 <body>
-  <svg xmlns="http://www.w3.org/2000/svg" ng:controller="DotsController">
+  <div ng:controller="DotsController">
+  <svg xmlns="http://www.w3.org/2000/svg">
       <g ng:repeat="dot in dots">
-          <circle r="5" ng:bind-attr='{"cx":"{{5*dot}}","cy":"{{10*dot}}"}' fill="red" />
+          <circle r="10"
+             ng:bind-attr='{"cx":"{{x_margin+x_spacing*dot}}",
+                            "cy":"{{y_margin+y_spacing*dot}}",
+                            "r":"{{curious()}}"}' fill="red" />
       </g>
   </svg>
+  </div>
 </body>
 </html>

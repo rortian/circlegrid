@@ -339,6 +339,9 @@ DotsController = function(){
 DotsController.prototype = {
     curious:function(){
         return 11;
+    },
+    hiya:function(){
+        console.log("In hiya");
     }
 }
 
@@ -349,6 +352,8 @@ angular.directive('fractalsvg:inspect',function(expression){
     return function(element){
         console.log(element);
         console.log(element.scope());
+        console.log(this);
+        this.$eval('hiya()');
     }
 });
 

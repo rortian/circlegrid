@@ -333,14 +333,25 @@ DotsController = function(){
     this.x_margin = 10;
     this.y_margin = 10;
     this.radius = 10;
+    this.point_grid = new PointGrid(25,25,-1.5,1.5,-1.5,1.5);
 }
 
 DotsController.prototype = {
     curious:function(){
-        console.log(this);
         return 11;
     }
 }
+
+angular.directive('fractalsvg:inspect',function(expression){
+    console.log("in inspect");
+    console.log(this);
+    console.log(this.scope());
+    return function(element){
+        console.log(element);
+        console.log(element.scope());
+    }
+});
+
 
 </script>
 </head>
@@ -351,7 +362,7 @@ DotsController.prototype = {
           <circle r="10"
              ng:bind-attr='{"cx":"{{x_margin+x_spacing*dot}}",
                             "cy":"{{y_margin+y_spacing*dot}}",
-                            "r":"{{curious()}}"}' fill="red" />
+                            "r":"{{curious()}}"}' fill="red" fractalsvg:inspect="" />
       </g>
   </svg>
   </div>

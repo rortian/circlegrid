@@ -149,8 +149,9 @@ PointGrid.prototype = {
         var ret = [];
         var raw = this.raw();
         for(var i in raw){
+            var i_int = parseInt(i);
             for(var j in raw[i]){
-                ret.push([i,j]);
+                ret.push([i_int,parseInt(j)]);
             }
         }
         console.log(ret);
@@ -350,10 +351,10 @@ angular.directive('fractalsvg:inspect',function(expression){
 <body>
   <div ng:controller="DotsController">
   <svg xmlns="http://www.w3.org/2000/svg">
-      <g ng:repeat="dot in dots">
+      <g ng:repeat="pair in coords">
           <circle 
-             ng:bind-attr='{"cx":"{{x_margin+x_spacing*dot}}",
-                            "cy":"{{y_margin+y_spacing*dot}}",
+             ng:bind-attr='{"cx":"{{x_margin+x_spacing*pair[0]}}",
+                            "cy":"{{y_margin+y_spacing*pair[1]}}",
                             "r":"{{radius}}"}' fill="red" fractalsvg:inspect="" />
       </g>
   </svg>

@@ -10,8 +10,6 @@
             el.setAttribute(k, attrs[k]);
         return el;
     }
-
-l
 </script>
 <script type="text/javascript">
 
@@ -146,7 +144,17 @@ PointGrid.prototype = {
             }
         }
         return ret;
-
+    },
+    coords:function(){
+        var ret = [];
+        var raw = this.raw();
+        for(var i in raw){
+            for(var j in raw[i]){
+                ret.push([i,j]);
+            }
+        }
+        console.log(ret);
+        return ret;
     }
 }
 
@@ -306,25 +314,6 @@ Group.prototype = {
 
     console.log(dist)
 
-angular.widget('fractalsvg:trace',function(linkElement){
-    var svg = makeSVG('svg',{version:"1.1"});
-    var circle;
-    var x_init = 25;
-    var y_init = 25;
-    var spacing = 25;
-    var colors = ["red","orange","yellow","green","blue"];
-    var fractal = pointy.apply(mappy);
-    var delta = 3.0/24;
-    for(var i=0;i<30;i++){
-        for(var j=0;j<30;j++){
-            circle = makeSVG('circle',{cx:""+(x_init+spacing*i),
-                cy:""+(y_init+j*spacing),r:"5",stroke:"black",fill:colors[fractal[i][j] % colors.length]})
-            svg.appendChild(circle);
-        }
-    }
-
-    linkElement.append(svg);
-});
 
 DotsController = function(){
     this.dots = [0,1,2,3,4];
@@ -334,12 +323,10 @@ DotsController = function(){
     this.y_margin = 10;
     this.radius = 10;
     this.point_grid = new PointGrid(25,25,-1.5,1.5,-1.5,1.5);
+    this.coords = this.point_grid.coords();
 }
 
 DotsController.prototype = {
-    curious:function(){
-        return 11;
-    },
     hiya:function(){
         console.log("In hiya");
     }
@@ -364,10 +351,10 @@ angular.directive('fractalsvg:inspect',function(expression){
   <div ng:controller="DotsController">
   <svg xmlns="http://www.w3.org/2000/svg">
       <g ng:repeat="dot in dots">
-          <circle r="10"
+          <circle 
              ng:bind-attr='{"cx":"{{x_margin+x_spacing*dot}}",
                             "cy":"{{y_margin+y_spacing*dot}}",
-                            "r":"{{curious()}}"}' fill="red" fractalsvg:inspect="" />
+                            "r":"{{radius}}"}' fill="red" fractalsvg:inspect="" />
       </g>
   </svg>
   </div>

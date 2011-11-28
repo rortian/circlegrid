@@ -333,6 +333,8 @@ DotsController = function(){
     this.groups = this.greedy.optimize();
     console.log(groups);
     this.colors = ["red","orange","yellow","green","blue"];
+    this.show_groups = true;
+    this.show_dots = true;
 }
 
 DotsController.prototype = {
@@ -358,21 +360,27 @@ angular.directive('fractalsvg:config',function(expression){
 </head>
 <body>
   <div ng:controller="DotsController">
-      m: <input ng:model="m" type="integer" min="2" max="10" /> <br/>
-      n: <input ng:model="n" type="integer" min="1" max="11" /> <br/>
+      m: <input ng:model="m" type="integer" min="2" max="10" />
+      n: <input ng:model="n" type="integer" min="1" max="11" />
+      dots: <input ng:model="show_dots" type="checkbox" />
+      groups: <input ng:model="show_groups" type="checkbox" />
   <svg xmlns="http://www.w3.org/2000/svg">
+      <g ng:show="show_dots">
       <g ng:repeat="pair in coords">
           <circle 
              ng:bind-attr='{"cx":"{{x_margin+x_spacing*pair[0]}}",
                             "cy":"{{y_margin+y_spacing*pair[1]}}",
                             "r":"{{radius}}"}'  fractalsvg:config="" />
       </g>
+      </g>
+      <g ng:show="show_groups">
       <g ng:repeat="g in groups">
           <rect ng:bind-attr='{"x":"{{x_margin/2-2.5+x_spacing*g.x_min}}",
                                "y":"{{y_margin/2-2.5+y_spacing*g.y_min}}",
                                "width":"{{(g.x_max - g.x_min + 1)*x_spacing}}",
                                "height":"{{(g.y_max - g.y_min + 1)*y_spacing}}"}'
                   fill="none" stroke="black" stroke-width="1"/>
+      </g>
       </g>
   </svg>
   </div>

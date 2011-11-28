@@ -69,16 +69,8 @@ ComplexNumber.prototype = {
 }
 var one = new ComplexNumber(1,0);
 var i = new ComplexNumber(0,1);
-console.log(one);
-console.log(i);
 var oneone = one.plus(i);
 var oneminus = one.minus(i);
-console.log(oneone);
-console.log(oneminus);
-console.log(oneone.times(oneminus));
-console.log(oneone.times(oneone.inverse()));
-console.log(oneminus.times(oneminus.inverse()));
-console.log(oneone.unit());
 
 function Mapper(l,m,n){
     this.m = m;
@@ -154,7 +146,6 @@ PointGrid.prototype = {
                 ret.push([i_int,parseInt(j)]);
             }
         }
-        console.log(ret);
         return ret;
     }
 }
@@ -296,11 +287,7 @@ Group.prototype = {
 
     greedy = new Greedy(pointy.apply(mappy));
 
-    console.log(greedy);
-
     var groups = greedy.optimize();
-
-    console.log(groups);
 
     var dist = {};
 
@@ -313,8 +300,6 @@ Group.prototype = {
         }
     }
 
-    console.log(dist)
-
 
 DotsController = function(){
     this.dots = [0,1,2,3,4];
@@ -325,23 +310,27 @@ DotsController = function(){
     this.radius = 10;
     this.point_grid = new PointGrid(25,25,-1.5,1.5,-1.5,1.5);
     this.coords = this.point_grid.coords();
+    this.lambda = new ComplexNumber(1e-6,0);
+    this.map = new Mapper(this.lambda,3,2);
+    this.escape = this.point_grid.apply(this.map);
+    this.colors = ["red","orange","yellow","green","blue"];
 }
 
 DotsController.prototype = {
-    hiya:function(){
-        console.log("In hiya");
+    color:function(n){
+        return this.colors[n % this.colors.length];
+    },
+    rate:function(pair){
+        return this.escape[pair[0]][pair[1]];
     }
+
 }
 
-angular.directive('fractalsvg:inspect',function(expression){
-    console.log("in inspect");
-    console.log(this);
-    console.log(this.scope());
+angular.directive('fractalsvg:config',function(expression){
     return function(element){
-        console.log(element);
-        console.log(element.scope());
-        console.log(this);
-        this.$eval('hiya()');
+        this.$watch("color(rate(pair))",function(old,newv){
+            element.attr("fill",newv);
+        })
     }
 });
 
@@ -355,7 +344,7 @@ angular.directive('fractalsvg:inspect',function(expression){
           <circle 
              ng:bind-attr='{"cx":"{{x_margin+x_spacing*pair[0]}}",
                             "cy":"{{y_margin+y_spacing*pair[1]}}",
-                            "r":"{{radius}}"}' fill="red" fractalsvg:inspect="" />
+                            "r":"{{radius}}"}'  fractalsvg:config="" />
       </g>
   </svg>
   </div>

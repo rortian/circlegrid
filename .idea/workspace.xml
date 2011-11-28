@@ -28,7 +28,7 @@
       <file leaf-file-name="awesome.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/awesome.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="353" column="36" selection-start="9157" selection-end="9157" vertical-scroll-proportion="0.7240473">
+            <state line="331" column="38" selection-start="8852" selection-end="8852" vertical-scroll-proportion="0.4701087">
               <folding />
             </state>
           </provider>
@@ -143,7 +143,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="201" y="44" width="1239" height="957" extended-state="0" />
+    <frame x="388" y="43" width="1239" height="957" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -209,7 +209,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/awesome.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="353" column="36" selection-start="9157" selection-end="9157" vertical-scroll-proportion="0.7240473">
+        <state line="331" column="38" selection-start="8852" selection-end="8852" vertical-scroll-proportion="0.4701087">
           <folding />
         </state>
       </provider>

@@ -367,10 +367,13 @@ angular.directive('fractalsvg:config',function(expression){
                             "cy":"{{y_margin+y_spacing*pair[1]}}",
                             "r":"{{radius}}"}'  fractalsvg:config="" />
       </g>
+      <g ng:repeat="g in groups">
+          <rect ng:bind-attr='{"x":"{{x_spacing*g.x_min}}",
+                               "y":"{{y_spacing*g.y_min}}",
+                               "width":"5",
+                               "height":"10"}' />
+      </g>
   </svg>
-  <div ng:repeat="g in groups">
-      {{g.x_min}},{{g.x_max}}
-  </div>
   </div>
 </body>
 </html>

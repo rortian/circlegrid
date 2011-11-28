@@ -316,8 +316,6 @@ DotsController = function(){
     this.n = 2;
     this.map = new Mapper(this.lambda,this.m,this.n);
     var update_map = function(old,newv){
-        console.log(newv);
-        console.log(controller);
         controller.map = new Mapper(controller.lambda,controller.m,controller.n);
     }
     this.$watch('m',update_map);
@@ -325,12 +323,14 @@ DotsController = function(){
     this.$watch('lambda',update_map);
 
     this.$watch('map',function(){
-        console.log("in map");
-        console.log(controller);
         controller.escape = controller.point_grid.apply(controller.map);
+        controller.greedy = new Greedy(controller.escape);
+        controller.groups = controller.greedy.optimize();
     })
 
     this.escape = this.point_grid.apply(this.map);
+    this.greedy = new Greedy(this.escape);
+    this.groups = this.greedy.optimize();
     this.colors = ["red","orange","yellow","green","blue"];
 }
 
@@ -340,9 +340,6 @@ DotsController.prototype = {
     },
     rate:function(pair){
         return this.escape[pair[0]][pair[1]];
-    },
-    change:function(x){
-        console.log("In change")
     }
 
 }
@@ -355,13 +352,6 @@ angular.directive('fractalsvg:config',function(expression){
     }
 });
 
-angular.widget('fractalsvg:register',function(compile_element){
-    return function(element) {
-    console.log("register widget");
-    console.log(this);
-    }
-})
-
 
 </script>
 </head>
@@ -369,7 +359,6 @@ angular.widget('fractalsvg:register',function(compile_element){
   <div ng:controller="DotsController">
       m: <input ng:model="m" type="number" min="2" max="10" /> <br/>
       n: <input ng:model="n" type="number" min="1" max="11" /> <br/>
-      <fractalsvg:register></fractalsvg:register>
   <svg xmlns="http://www.w3.org/2000/svg">
       <g ng:repeat="pair in coords">
           <circle 

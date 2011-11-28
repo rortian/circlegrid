@@ -311,7 +311,14 @@ DotsController = function(){
     this.radius = 10;
     this.point_grid = new PointGrid(25,25,-1.5,1.5,-1.5,1.5);
     this.coords = this.point_grid.coords();
-    this.lambda = new ComplexNumber(1e-6,0);
+    this.real = 1e-6;
+    this.imag = 0;
+    this.lambda = new ComplexNumber(this.real,this.imag);
+    var update_lambda = function(){
+        controller.lambda = new ComplexNumber(controller.real,controller.imag);
+    }
+    this.$watch('real',update_lambda);
+    this.$watch('imag',update_lambda);
     this.m = 3;
     this.n = 2;
     this.map = new Mapper(this.lambda,this.m,this.n);
@@ -363,7 +370,9 @@ angular.directive('fractalsvg:config',function(expression){
       m: <input ng:model="m" type="integer" min="2" max="10" />
       n: <input ng:model="n" type="integer" min="1" max="11" />
       dots: <input ng:model="show_dots" type="checkbox" />
-      groups: <input ng:model="show_groups" type="checkbox" />
+      groups: <input ng:model="show_groups" type="checkbox" /><br/>
+      lambda: <input ng:model="real" min="-1" max="1" type="number" /> +
+              <input ng:model="imag" min="-1" max="1" type="number" />
   <svg xmlns="http://www.w3.org/2000/svg">
       <g ng:show="show_dots">
       <g ng:repeat="pair in coords">

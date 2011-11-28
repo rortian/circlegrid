@@ -84,7 +84,7 @@ Mapper.prototype = {
     step:function(inc){
         if(this.same){
             var raised = inc.power(this.n);
-            return raised.plus(lambda.times(raised.inverse()));
+            return raised.plus(this.lambda.times(raised.inverse()));
         } else {
             mth = inc.power(this.m);
             nth = inc.power(this.n);
@@ -316,13 +316,19 @@ DotsController = function(){
     this.n = 2;
     this.map = new Mapper(this.lambda,this.m,this.n);
     var update_map = function(old,newv){
-        console.log(this);
+        console.log(newv);
         console.log(controller);
         controller.map = new Mapper(controller.lambda,controller.m,controller.n);
     }
     this.$watch('m',update_map);
     this.$watch('n',update_map);
     this.$watch('lambda',update_map);
+
+    this.$watch('map',function(){
+        console.log("in map");
+        console.log(controller);
+        controller.escape = controller.point_grid.apply(controller.map);
+    })
 
     this.escape = this.point_grid.apply(this.map);
     this.colors = ["red","orange","yellow","green","blue"];
@@ -334,6 +340,9 @@ DotsController.prototype = {
     },
     rate:function(pair){
         return this.escape[pair[0]][pair[1]];
+    },
+    change:function(x){
+        console.log("In change")
     }
 
 }
@@ -346,13 +355,21 @@ angular.directive('fractalsvg:config',function(expression){
     }
 });
 
+angular.widget('fractalsvg:register',function(compile_element){
+    return function(element) {
+    console.log("register widget");
+    console.log(this);
+    }
+})
+
 
 </script>
 </head>
 <body>
   <div ng:controller="DotsController">
-      m: <input name="m" ng:validate="integer:2:10" /> <br/>
-      n: <input name="n" ng:validate="integer:1:10" /> <br/>
+      m: <input ng:model="m" type="number" min="2" max="10" /> <br/>
+      n: <input ng:model="n" type="number" min="1" max="11" /> <br/>
+      <fractalsvg:register></fractalsvg:register>
   <svg xmlns="http://www.w3.org/2000/svg">
       <g ng:repeat="pair in coords">
           <circle 

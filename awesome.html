@@ -331,6 +331,7 @@ DotsController = function(){
     this.escape = this.point_grid.apply(this.map);
     this.greedy = new Greedy(this.escape);
     this.groups = this.greedy.optimize();
+    console.log(groups);
     this.colors = ["red","orange","yellow","green","blue"];
 }
 
@@ -357,8 +358,8 @@ angular.directive('fractalsvg:config',function(expression){
 </head>
 <body>
   <div ng:controller="DotsController">
-      m: <input ng:model="m" type="number" min="2" max="10" /> <br/>
-      n: <input ng:model="n" type="number" min="1" max="11" /> <br/>
+      m: <input ng:model="m" type="integer" min="2" max="10" /> <br/>
+      n: <input ng:model="n" type="integer" min="1" max="11" /> <br/>
   <svg xmlns="http://www.w3.org/2000/svg">
       <g ng:repeat="pair in coords">
           <circle 
@@ -367,6 +368,9 @@ angular.directive('fractalsvg:config',function(expression){
                             "r":"{{radius}}"}'  fractalsvg:config="" />
       </g>
   </svg>
+  <div ng:repeat="g in groups">
+      {{g.x_min}},{{g.x_max}}
+  </div>
   </div>
 </body>
 </html>

@@ -302,7 +302,8 @@ Group.prototype = {
 
 
 DotsController = function(){
-    this.dots = [0,1,2,3,4];
+    var controller = this;
+
     this.x_spacing = 25;
     this.y_spacing = 25;
     this.x_margin = 10;
@@ -311,7 +312,18 @@ DotsController = function(){
     this.point_grid = new PointGrid(25,25,-1.5,1.5,-1.5,1.5);
     this.coords = this.point_grid.coords();
     this.lambda = new ComplexNumber(1e-6,0);
-    this.map = new Mapper(this.lambda,3,2);
+    this.m = 3;
+    this.n = 2;
+    this.map = new Mapper(this.lambda,this.m,this.n);
+    var update_map = function(old,newv){
+        console.log(this);
+        console.log(controller);
+        controller.map = new Mapper(controller.lambda,controller.m,controller.n);
+    }
+    this.$watch('m',update_map);
+    this.$watch('n',update_map);
+    this.$watch('lambda',update_map);
+
     this.escape = this.point_grid.apply(this.map);
     this.colors = ["red","orange","yellow","green","blue"];
 }
@@ -339,6 +351,8 @@ angular.directive('fractalsvg:config',function(expression){
 </head>
 <body>
   <div ng:controller="DotsController">
+      m: <input name="m" ng:validate="integer:2:10" /> <br/>
+      n: <input name="n" ng:validate="integer:1:10" /> <br/>
   <svg xmlns="http://www.w3.org/2000/svg">
       <g ng:repeat="pair in coords">
           <circle 

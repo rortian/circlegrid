@@ -306,8 +306,8 @@ DotsController = function(){
 
     this.x_spacing = 25;
     this.y_spacing = 25;
-    this.x_margin = 10;
-    this.y_margin = 10;
+    this.x_margin = 20;
+    this.y_margin = 20;
     this.radius = 10;
     this.point_grid = new PointGrid(25,25,-1.5,1.5,-1.5,1.5);
     this.coords = this.point_grid.coords();
@@ -368,10 +368,11 @@ angular.directive('fractalsvg:config',function(expression){
                             "r":"{{radius}}"}'  fractalsvg:config="" />
       </g>
       <g ng:repeat="g in groups">
-          <rect ng:bind-attr='{"x":"{{x_spacing*g.x_min}}",
-                               "y":"{{y_spacing*g.y_min}}",
-                               "width":"5",
-                               "height":"10"}' />
+          <rect ng:bind-attr='{"x":"{{x_margin/2-2.5+x_spacing*g.x_min}}",
+                               "y":"{{y_margin/2-2.5+y_spacing*g.y_min}}",
+                               "width":"{{(g.x_max - g.x_min + 1)*x_spacing}}",
+                               "height":"{{(g.y_max - g.y_min + 1)*y_spacing}}"}'
+                  fill="none" stroke="black" stroke-width="1"/>
       </g>
   </svg>
   </div>

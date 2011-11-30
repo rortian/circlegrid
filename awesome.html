@@ -367,12 +367,12 @@ angular.directive('fractalsvg:config',function(expression){
 </head>
 <body>
   <div ng:controller="DotsController">
-      m: <input ng:model="m" type="integer" min="2" max="10" />
-      n: <input ng:model="n" type="integer" min="1" max="11" />
+      m: <input ng:model="m" type="integer" min="2" max="10" size="2" />
+      n: <input ng:model="n" type="integer" min="1" max="11" size="2"/>
       dots: <input ng:model="show_dots" type="checkbox" />
       groups: <input ng:model="show_groups" type="checkbox" /><br/>
-      lambda: <input ng:model="real" min="-1" max="1" type="number" /> +
-              <input ng:model="imag" min="-1" max="1" type="number" />
+      lambda: <input ng:model="real" min="-1" max="1" type="number" size="20" step="1e-7"/> +
+              <input ng:model="imag" min="-1" max="1" type="number" size="20" step="1e-7" />
   <svg xmlns="http://www.w3.org/2000/svg">
       <g ng:show="show_dots">
       <g ng:repeat="pair in coords">

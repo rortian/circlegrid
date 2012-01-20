@@ -313,31 +313,30 @@ DotsController = function(){
     this.coords = this.point_grid.coords();
     this.real = 1e-6;
     this.imag = 0;
-    this.lambda = new ComplexNumber(this.real,this.imag);
     var update_lambda = function(){
         controller.lambda = new ComplexNumber(controller.real,controller.imag);
     }
     this.$watch('real',update_lambda);
     this.$watch('imag',update_lambda);
+    this.$digest();
+
     this.m = 3;
     this.n = 2;
-    this.map = new Mapper(this.lambda,this.m,this.n);
     var update_map = function(old,newv){
         controller.map = new Mapper(controller.lambda,controller.m,controller.n);
     }
     this.$watch('m',update_map);
     this.$watch('n',update_map);
     this.$watch('lambda',update_map);
+    this.$digest();
 
     this.$watch('map',function(){
         controller.escape = controller.point_grid.apply(controller.map);
         controller.greedy = new Greedy(controller.escape);
         controller.groups = controller.greedy.optimize();
     })
+    this.$digest();
 
-    this.escape = this.point_grid.apply(this.map);
-    this.greedy = new Greedy(this.escape);
-    this.groups = this.greedy.optimize();
     console.log(groups);
     this.colors = ["red","orange","yellow","green","blue"];
     this.show_groups = true;

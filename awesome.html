@@ -318,7 +318,6 @@ DotsController = function(){
     }
     this.$watch('real',update_lambda);
     this.$watch('imag',update_lambda);
-    this.$digest();
 
     this.m = 3;
     this.n = 2;
@@ -328,14 +327,12 @@ DotsController = function(){
     this.$watch('m',update_map);
     this.$watch('n',update_map);
     this.$watch('lambda',update_map);
-    this.$digest();
 
     this.$watch('map',function(){
         controller.escape = controller.point_grid.apply(controller.map);
         controller.greedy = new Greedy(controller.escape);
         controller.groups = controller.greedy.optimize();
     })
-    this.$digest();
 
     console.log(groups);
     this.colors = ["red","orange","yellow","green","blue"];

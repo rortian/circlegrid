@@ -98,6 +98,9 @@ ColorController = function ($resource,$rootScope) {
 
     $rootScope.current_colors = ["red","blue"];
 
+    this.patterns = [["red", "orange", "yellow", "green", "blue"],
+                      ["red","blue","green"]]
+
     console.log($rootScope);
 }
 
@@ -153,6 +156,9 @@ ColorController.prototype = {
   </svg>
   </div>
   <div ng:controller="ColorController">
+      <div ng:repeat="pattern in patterns">
+
+      </div>
   </div>
 </body>
 </html>

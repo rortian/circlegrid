@@ -75,7 +75,7 @@ angular.directive('fractalsvg:config',function(expression){
     }
 });
 
-ColorController = function ($resource) {
+ColorController = function ($resource,$rootScope) {
   this.Lovers = $resource(
     "http://www.colourlovers.com/api/palettes/:what",
      {format:'json',jsonCallback:'JSON_CALLBACK'},
@@ -84,9 +84,11 @@ ColorController = function ($resource) {
          search:{method:'JSONP',isArray:true},
          random:{method:'JSONP',isArray:true,params:{what:"random"}}}
     )
+
+    console.log($rootScope);
 }
 
-ColorController.$inject = ['$resource']
+ColorController.$inject = ['$resource','$rootScope']
 
 ColorController.prototype = {
   fetch: function(){

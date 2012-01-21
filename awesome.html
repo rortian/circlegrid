@@ -56,11 +56,17 @@ DotsController = function ($resource) {
     this.Lovers = $resource(
             "http://www.colourlovers.com/api/palettes/:what",
             {format:'json',jsonCallback:'JSON_CALLBACK'},
-            {"new":{method:'JSON',isArray:true,params:{what:"new"}},
-                "top":{method:'JSON',isArray:true,params:{what:"top"}},
-                search:{method:'JSON',isArray:true},
-                random:{method:'JSON',isArray:true,params:{what:"random"}}}
+            {"new":{method:'JSONP',isArray:true,params:{what:"new"}},
+                "top":{method:'JSONP',isArray:true,params:{what:"top"}},
+                search:{method:'JSONP',isArray:true},
+                random:{method:'JSONP',isArray:true,params:{what:"random"}}}
     )
+
+    this.random = this.Lovers.random();
+    this.$watch('random',function(){
+        console.log("Current random value");
+        console.log(controller.random);
+    })
 }
 
 DotsController.prototype = {

@@ -76,6 +76,37 @@ angular.directive('fractalsvg:config',function(expression){
     }
 });
 
+    function FractalController($resource){
+  this.fun = ['hi']
+  this.Lovers = $resource(
+    "http://www.colourlovers.com/api/palettes/:what",
+    {format:'json',jsonCallback:'JSON_CALLBACK'},
+    {"new":{method:'JSON',isArray:true,params:{what:"new"}},
+     "top":{method:'JSON',isArray:true,params:{what:"top"}},
+     search:{method:'JSON',isArray:true},
+     random:{method:'JSON',isArray:true,params:{what:"random"}}}
+  )
+  this.gallery = []
+}
+
+
+FractalController.prototype = {
+  fetch: function(){
+    this.gallery = this.Lovers.new()
+  },
+  "top": function(){
+    this.gallery = this.Lovers.top()
+  },
+  search: function(){
+    this.gallery = this.Lovers.search({keywords:this.query})
+  },
+  random: function(){
+    this.gallery = this.Lovers.random()
+  }
+}
+
+FractalController.$inject = ['$resource']
+
 
 </script>
 </head>

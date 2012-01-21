@@ -14,7 +14,7 @@
 </script>
 <script type="text/javascript">
 
-DotsController = function ($resource) {
+DotsController = function () {
     var controller = this;
 
     this.x_spacing = 25;
@@ -53,14 +53,6 @@ DotsController = function ($resource) {
 
     this.colors = ["red", "orange", "yellow", "green", "blue"];
 
-    this.Lovers = $resource(
-            "http://www.colourlovers.com/api/palettes/:what",
-            {format:'json',jsonCallback:'JSON_CALLBACK'},
-            {"new":{method:'JSONP',isArray:true,params:{what:"new"}},
-                "top":{method:'JSONP',isArray:true,params:{what:"top"}},
-                search:{method:'JSONP',isArray:true},
-                random:{method:'JSONP',isArray:true,params:{what:"random"}}}
-    )
 }
 
 DotsController.prototype = {
@@ -73,7 +65,7 @@ DotsController.prototype = {
 
 }
 
-DotsController.$inject = ['$resource']
+
 
 angular.directive('fractalsvg:config',function(expression){
     return function(element){
@@ -83,10 +75,20 @@ angular.directive('fractalsvg:config',function(expression){
     }
 });
 
+ColorController = function ($resource) {
+  this.Lovers = $resource(
+    "http://www.colourlovers.com/api/palettes/:what",
+     {format:'json',jsonCallback:'JSON_CALLBACK'},
+        {"new":{method:'JSONP',isArray:true,params:{what:"new"}},
+         "top":{method:'JSONP',isArray:true,params:{what:"top"}},
+         search:{method:'JSONP',isArray:true},
+         random:{method:'JSONP',isArray:true,params:{what:"random"}}}
+    )
+}
 
+ColorController.$inject = ['$resource']
 
-/*
-FractalController.prototype = {
+ColorController.prototype = {
   fetch: function(){
     this.gallery = this.Lovers.new()
   },
@@ -100,7 +102,7 @@ FractalController.prototype = {
     this.gallery = this.Lovers.random()
   }
 }
-*/
+
 
 
 

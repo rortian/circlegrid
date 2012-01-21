@@ -59,7 +59,7 @@ DotsController = function ($resource) {
             {"new":{method:'JSONP',isArray:true,params:{what:"new"}},
                 "top":{method:'JSONP',isArray:true,params:{what:"top"}},
                 search:{method:'JSONP',isArray:true},
-                random:{method:'JSONP',isArray:true,params:{what:"random"}}}
+                random:{method:'JSONP',isArray:false,params:{what:"random"}}}
     )
 
     this.random = this.Lovers.random();

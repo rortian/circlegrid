@@ -53,6 +53,17 @@ DotsController = function () {
 
     this.colors = ["red", "orange", "yellow", "green", "blue"];
 
+    this.$watch('current_colors',function(scope,newValue,oldValue){
+        if(newValue === oldValue){
+            console.log("first run of current_colors check with");
+            console.log(newValue);
+            console.log("as the newValue");
+        } else {
+            console.log(newValue);
+            console.log("is the newValue");
+        }
+    })
+
 }
 
 DotsController.prototype = {

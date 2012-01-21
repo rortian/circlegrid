@@ -14,12 +14,7 @@
 </script>
 <script type="text/javascript">
 
-
-
-
-
-
-DotsController = function(){
+DotsController = function ($resource) {
     var controller = this;
 
     this.x_spacing = 25;
@@ -27,35 +22,45 @@ DotsController = function(){
     this.x_margin = 20;
     this.y_margin = 20;
     this.radius = 10;
-    this.point_grid = new PointGrid(30,30,-1.5,1.5,-1.5,1.5);
+    this.point_grid = new PointGrid(30, 30, -1.5, 1.5, -1.5, 1.5);
     this.coords = this.point_grid.coords();
     this.real = 1e-6;
     this.imag = 0;
-    var update_lambda = function(){
-        controller.lambda = new ComplexNumber(controller.real,controller.imag);
+    var update_lambda = function () {
+        controller.lambda = new ComplexNumber(controller.real, controller.imag);
     }
-    this.$watch('real',update_lambda);
-    this.$watch('imag',update_lambda);
+    this.$watch('real', update_lambda);
+    this.$watch('imag', update_lambda);
 
     this.m = 3;
     this.n = 2;
-    var update_map = function(old,newv){
-        controller.map = new Mapper(controller.lambda,controller.m,controller.n);
+    var update_map = function (old, newv) {
+        controller.map = new Mapper(controller.lambda, controller.m, controller.n);
     }
-    this.$watch('m',update_map);
-    this.$watch('n',update_map);
-    this.$watch('lambda',update_map);
+    this.$watch('m', update_map);
+    this.$watch('n', update_map);
+    this.$watch('lambda', update_map);
 
-    this.$watch('map',function(){
+    this.$watch('map', function () {
         controller.escape = controller.point_grid.apply(controller.map);
         controller.greedy = new Greedy(controller.escape);
         controller.groups = controller.greedy.optimize();
     })
 
     console.log(groups);
-    this.colors = ["red","orange","yellow","green","blue"];
     this.show_groups = true;
     this.show_dots = true;
+
+    this.colors = ["red", "orange", "yellow", "green", "blue"];
+
+    this.Lovers = $resource(
+            "http://www.colourlovers.com/api/palettes/:what",
+            {format:'json',jsonCallback:'JSON_CALLBACK'},
+            {"new":{method:'JSON',isArray:true,params:{what:"new"}},
+                "top":{method:'JSON',isArray:true,params:{what:"top"}},
+                search:{method:'JSON',isArray:true},
+                random:{method:'JSON',isArray:true,params:{what:"random"}}}
+    )
 }
 
 DotsController.prototype = {
@@ -68,6 +73,8 @@ DotsController.prototype = {
 
 }
 
+DotsController.$inject = ['$resource']
+
 angular.directive('fractalsvg:config',function(expression){
     return function(element){
         this.$watch("color(rate(pair))",function(old,newv){
@@ -76,20 +83,9 @@ angular.directive('fractalsvg:config',function(expression){
     }
 });
 
-    function FractalController($resource){
-  this.fun = ['hi']
-  this.Lovers = $resource(
-    "http://www.colourlovers.com/api/palettes/:what",
-    {format:'json',jsonCallback:'JSON_CALLBACK'},
-    {"new":{method:'JSON',isArray:true,params:{what:"new"}},
-     "top":{method:'JSON',isArray:true,params:{what:"top"}},
-     search:{method:'JSON',isArray:true},
-     random:{method:'JSON',isArray:true,params:{what:"random"}}}
-  )
-  this.gallery = []
-}
 
 
+/*
 FractalController.prototype = {
   fetch: function(){
     this.gallery = this.Lovers.new()
@@ -104,8 +100,9 @@ FractalController.prototype = {
     this.gallery = this.Lovers.random()
   }
 }
+*/
 
-FractalController.$inject = ['$resource']
+
 
 
 </script>

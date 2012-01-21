@@ -96,7 +96,8 @@ ColorController = function ($resource,$rootScope) {
          random:{method:'JSONP',isArray:true,params:{what:"random"}}}
     )
 
-    $rootScope.$apply("current_color = ['blue','red']");
+    $rootScope.current_colors = ["red","blue"];
+
     console.log($rootScope);
 }
 

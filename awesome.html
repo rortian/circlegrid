@@ -95,6 +95,8 @@ ColorController = function ($resource,$rootScope) {
          random:{method:'JSONP',isArray:true,params:{what:"random"}}}
     )
 
+    this.root = $rootScope;
+
     $rootScope.current_colors = ["red","blue"];
 
     this.library = []
@@ -120,12 +122,12 @@ ColorController.prototype = {
   },
   random: function(){
     return this.Lovers.random()
+  },
+  set_current_color:function(palette){
+    console.log(palette);
+    this.root.current_colors = palette.colors;
   }
 }
-
-
-
-
 
 </script>
 </head>
@@ -157,10 +159,11 @@ ColorController.prototype = {
       </g>
   </svg>
   </div>
-  <div ng:controller="ColorController">
+  <div ng:controller="ColorController" style="float:right;">
       <div ng:repeat="collection in library">
           <div ng:repeat="palette in collection">
-              {{palette.name}}
+              {{palette.title}}
+              <button ng:click="set_current_color(palette)">Set now</button>
           </div>
       </div>
   </div>

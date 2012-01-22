@@ -47,7 +47,6 @@ DotsController = function () {
         controller.groups = controller.greedy.optimize();
     })
 
-    console.log(groups);
     this.show_groups = true;
     this.show_dots = true;
 
@@ -98,26 +97,29 @@ ColorController = function ($resource,$rootScope) {
 
     $rootScope.current_colors = ["red","blue"];
 
-    this.patterns = [["red", "orange", "yellow", "green", "blue"],
-                      ["red","blue","green"]]
+    this.library = []
+    console.log(this.library);
 
-    console.log($rootScope);
+    this.library.push(this.top());
+    this.library.push(this.random());
+
+    console.log(this.library);
 }
 
 ColorController.$inject = ['$resource','$rootScope']
 
 ColorController.prototype = {
   fetch: function(){
-    this.gallery = this.Lovers.new()
+    return this.Lovers.new()
   },
   "top": function(){
-    this.gallery = this.Lovers.top()
+    return this.Lovers.top()
   },
   search: function(){
-    this.gallery = this.Lovers.search({keywords:this.query})
+    return this.Lovers.search({keywords:this.query})
   },
   random: function(){
-    this.gallery = this.Lovers.random()
+    return this.Lovers.random()
   }
 }
 
@@ -156,8 +158,10 @@ ColorController.prototype = {
   </svg>
   </div>
   <div ng:controller="ColorController">
-      <div ng:repeat="pattern in patterns">
-
+      <div ng:repeat="collection in library">
+          <div ng:repeat="palette in collection">
+              {{palette.name}}
+          </div>
       </div>
   </div>
 </body>

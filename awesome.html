@@ -60,6 +60,7 @@ DotsController = function () {
         } else {
             console.log(newValue);
             console.log("is the newValue");
+            controller.colors = newValue;
         }
     })
 
@@ -132,7 +133,7 @@ ColorController.prototype = {
 </script>
 </head>
 <body>
-  <div ng:controller="DotsController">
+  <div ng:controller="DotsController" style="width:80%;">
       m: <input ng:model="m" type="integer" min="2" max="10" size="2" />
       n: <input ng:model="n" type="integer" min="1" max="11" size="2"/>
       dots: <input ng:model="show_dots" type="checkbox" />
@@ -159,7 +160,7 @@ ColorController.prototype = {
       </g>
   </svg>
   </div>
-  <div ng:controller="ColorController" style="float:right;">
+  <div ng:controller="ColorController" style="float:right;width:20%;">
       <div ng:repeat="collection in library">
           <div ng:repeat="palette in collection">
               {{palette.title}}

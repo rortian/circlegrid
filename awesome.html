@@ -129,12 +129,13 @@ ColorController.prototype = {
     this.root.current_colors = palette.colors;
   },
   circle:function(color){
-      var returning = {width:"10px",
-                    height:"10px",
+      var circle_size = "20px"
+      var returning = {width:circle_size,
+                    height:circle_size,
                     "border-radius":"50%",
                     "background-color":"#"+color,
-                    float:"left"};
-      console.log(returning);
+                    float:"left",
+                    margin:"2.5px"};
       return returning;
   }
 }

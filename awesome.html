@@ -127,6 +127,14 @@ ColorController.prototype = {
   set_current_color:function(palette){
     console.log(palette);
     this.root.current_colors = palette.colors;
+  },
+  circle:function(color){
+      var returning = {width:"10px",
+                    height:"10px",
+                    "border-radius":"50%",
+                    "background-color":"#"+color};
+      console.log(returning);
+      return returning;
   }
 }
 
@@ -165,6 +173,9 @@ ColorController.prototype = {
           <div ng:repeat="palette in collection">
               {{palette.title}}
               <button ng:click="set_current_color(palette)">Set now</button>
+              <div ng:repeat="color in palette.colors">
+                  <div ng:style="circle(color)"></div>
+              </div>
           </div>
       </div>
   </div>

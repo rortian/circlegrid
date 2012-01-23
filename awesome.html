@@ -132,7 +132,8 @@ ColorController.prototype = {
       var returning = {width:"10px",
                     height:"10px",
                     "border-radius":"50%",
-                    "background-color":"#"+color};
+                    "background-color":"#"+color,
+                    float:"left"};
       console.log(returning);
       return returning;
   }
@@ -169,8 +170,8 @@ ColorController.prototype = {
   </svg>
   </div>
   <div ng:controller="ColorController" style="float:right;width:20%;">
-      <div ng:repeat="collection in library">
-          <div ng:repeat="palette in collection">
+      <div ng:repeat="collection in library" >
+          <div ng:repeat="palette in collection" style="clear:both;">
               {{palette.title}}
               <button ng:click="set_current_color(palette)">Set now</button>
               <div ng:repeat="color in palette.colors">
